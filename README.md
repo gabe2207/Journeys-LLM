@@ -1,8 +1,8 @@
-Sistema de Processamento de Mensagens com LLM e Adapter
+# Sistema de Processamento de Mensagens com LLM e Adapter
 
 Este projeto implementa um sistema modular para processar mensagens de usuários utilizando Modelos de Linguagem Natural (LLM). Ele utiliza o padrão Adapter Design Pattern para garantir flexibilidade na escolha e integração de diferentes modelos, permitindo trocar entre um modelo local ou outros tipos de backends com alterações mínimas no restante do código.
 
-Principais Componentes
+## Principais Componentes
 1. Adapter Design Pattern
 Interface Base (LLMAdapter):
 
@@ -10,35 +10,38 @@ Define um método genérico generate_response que deve ser implementado por qual
 Isso assegura que o restante do código não precise se preocupar com os detalhes específicos de como o modelo é inicializado ou processado.
 Adapter para Modelo Local (LocalLLMAdapter):
 
-Implementa a interface LLMAdapter.
+### Implementa a interface LLMAdapter.
 Usa o framework Hugging Face Transformers para carregar e interagir com um modelo local como EleutherAI/gpt-neo-1.3B.
 Fornece a funcionalidade de gerar respostas baseadas em prompts fornecidos pelo sistema.
 Função de Inicialização (get_llm_adapter):
 
-Centraliza a lógica para selecionar e configurar o adapter correto.
+### Centraliza a lógica para selecionar e configurar o adapter correto.
 Atualmente suporta apenas modelos locais, mas pode ser estendido facilmente para suportar modelos online ou outros adaptadores.
 2. Fluxo de Processamento
 O sistema processa mensagens de usuários através de um pipeline dividido em etapas claras:
 
-Jornada 1: Verificação por Regras Simples:
+## Jornada 1: Verificação por Regras Simples:
 
 Verifica se a mensagem se enquadra em categorias predefinidas, como "Resposta Negativa Direta" ou "Oferta Muito Baixa".
 As mensagens identificadas são processadas diretamente, sem passar por classificação ou modelos LLM.
-Jornada 2: Classificação com Machine Learning:
+
+## Jornada 2: Classificação com Machine Learning:
 
 Para mensagens que não se encaixam nas regras simples, utiliza um pipeline de Machine Learning (TF-IDF + Decision Tree) para categorizá-las.
 As categorias possíveis são:
 "Resposta Negativa Direta"
 "Oferta Muito Baixa"
 "Encaminhar para LLM"
-Jornada 3: Processamento pelo LLM:
+
+## Jornada 3: Processamento pelo LLM:
 
 Mensagens categorizadas como "Encaminhar para LLM" são enviadas ao modelo configurado pelo adapter.
 Um prompt específico é usado para fornecer contexto e gerar respostas adequadas.
 3. Dispatch Table
 O código utiliza uma dispatch table para mapear categorias de mensagens às funções de processamento correspondentes.
 Isso elimina a necessidade de múltiplos if ou elif, tornando o código mais modular e fácil de expandir.
-Flexibilidade do Adapter
+
+## Flexibilidade do Adapter
 O uso do adapter permite:
 
 Troca Fácil de Modelos:
@@ -52,7 +55,7 @@ Manutenção Simplificada:
 
 Caso precise alterar a forma como os prompts são processados ou otimizados para um modelo específico, as mudanças ficam isoladas dentro do adapter.
 
-Exemplos Práticos de Uso
+### Exemplos Práticos de Uso
 Exemplo 1: Configuração do Adapter
 Você pode configurar o sistema para usar um modelo local:
 
@@ -98,7 +101,7 @@ Usuário 6 - Mensagem: Estou interessado no curso, como funciona?
 Categoria: Encaminhar para LLM
 Resposta: Este é um curso completo para iniciantes aprenderem programação com Python.
 
-Cenários de Teste
+### Cenários de Teste
 Cenário 1: Testar Fluxo Completo
 Configure o adapter para o modelo local e processe mensagens de teste.
 Valide que as mensagens são classificadas corretamente e que as respostas são coerentes.
@@ -112,7 +115,7 @@ Teste mensagens que se enquadram nas categorias de regras simples, como:
 Valide que essas mensagens são processadas sem passar pelo LLM.
 
 
-Conclusão
+## Conclusão
 A implementação com o adapter oferece:
 
 Flexibilidade para trocar entre modelos sem alterar a lógica principal.
