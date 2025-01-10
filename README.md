@@ -1,4 +1,5 @@
 Sistema de Processamento de Mensagens com LLM e Adapter
+
 Este projeto implementa um sistema modular para processar mensagens de usuários utilizando Modelos de Linguagem Natural (LLM). Ele utiliza o padrão Adapter Design Pattern para garantir flexibilidade na escolha e integração de diferentes modelos, permitindo trocar entre um modelo local ou outros tipos de backends com alterações mínimas no restante do código.
 
 Principais Componentes
